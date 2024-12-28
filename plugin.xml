@@ -10,18 +10,17 @@
   <license>Apache 2.0 License</license>
   <keywords>bugly,cordova,crash,symbol,anr</keywords>
   <license>Apache 2.0</license>
-  <repo>https://github.com/jasonz1987/cordova-plugin-bugly-sdk.git</repo>
-  <issue>https://github.com/jasonz1987/cordova-plugin-bugly-sdk/issues</issue>
+  <repo>https://github.com/zch0928/cordova-plugin-bugly-sdk.git</repo>
+  <issue>https://github.com/zch0928/cordova-plugin-bugly-sdk/issues</issue>
 
   <preference name="ANDROID_APPID" />
-  <preference name="IOS_APPID" />
   <js-module name="Bugly" src="www/bugly.js">
     <clobbers target="Bugly"/>
   </js-module>
   <!-- android -->
   <platform name="android">
-    <lib-file src="src/android/libs/bugly_crash_release.jar" />
-    <source-file src="src/android/CDVBugly.java" target-dir="src/com/jasonz/cordova/bugly" />
+    <lib-file src="src/android/libs/crashreport-4.1.9.3.aar" />
+    <source-file src="src/android/CDVBugly.java" target-dir="src/cn/com/gtmc/serviceapad/bugly" />
     <config-file target="AndroidManifest.xml" parent="/manifest">
       <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
       <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
@@ -34,31 +33,9 @@
     </config-file>
     <config-file target="res/xml/config.xml" parent="/*">
       <feature name="Bugly">
-        <param name="android-package" value="com.jasonz.cordova.bugly.CDVBugly"/>
+        <param name="android-package" value="cn.com.gtmc.serviceapad.bugly.CDVBugly"/>
       </feature>
       <preference name="ANDROID_APPID" value="$ANDROID_APPID"/>
-    </config-file>
-  </platform>
-
-  <!-- ios -->
-  <platform name="ios">
-
-    <header-file src="src/ios/CDVBugly.h" />
-    <source-file src="src/ios/CDVBugly.m" />
-    <framework src="SystemConfiguration.framework" />
-    <framework src="Security.framework" />
-    <framework src="libz.tbd" />
-    <framework src="libc++.tbd" />
-    <framework src="src/ios/Bugly.framework" custom="true" />
-    <config-file target="config.xml" parent="/*">
-        <feature name="Bugly">
-          <param name="ios-package" value="CDVBugly"/>
-        </feature>
-        <preference name="IOS_APPID" value="$IOS_APPID"/>
-    </config-file>
-
-    <config-file target="*-Info.plist" parent="BuglyAppIDString">
-        <string>$IOS_APPID</string>
     </config-file>
   </platform>
 
