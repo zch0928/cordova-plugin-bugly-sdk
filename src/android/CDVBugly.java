@@ -1,4 +1,4 @@
-package com.jasonz.cordova.bugly;
+package cn.com.gtmc.serviceapad.bugly;
 
 import org.apache.cordova.BuildConfig;
 import org.apache.cordova.CallbackContext;
