@@ -4,13 +4,12 @@
   "cordova": {
     "id": "cordova-plugin-bugly-sdk",
     "platforms": [
-      "android",
-      "ios"
+      "android"
     ]
   },
   "description": "Cordova Crash Reporter",
-  "repository": "https://github.com/jasonz1987/cordova-plugin-bugly-sdk.git",
-  "issue": "https://github.com/jasonz1987/cordova-plugin-bugly-sdk/issues",
+  "repository": "https://github.com/zch0928/cordova-plugin-bugly-sdk.git",
+  "issue": "https://github.com/zch0928/cordova-plugin-bugly-sdk/issues",
   "keywords": [
     "cordova",
     "bugly",
