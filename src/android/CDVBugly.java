@@ -7,11 +7,14 @@ import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
 
+import android.content.pm.PackageManager;
 import android.os.Build;
+import android.util.ArrayMap;
 import android.util.Log;
 
 import org.apache.cordova.device.Device;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.bugly.crashreport.CrashReport.UserStrategy;
@@ -36,6 +39,8 @@ public class CDVBugly extends CordovaPlugin {
                 return this.testJavaCrash(args, callbackContext);
             case "testSIGTRAP":
                 return this.testSIGTRAP(args, callbackContext);
+            case "postContent":
+                return this.postContent(args, callbackContext);
             default:
                 return false;
         }
@@ -45,7 +50,12 @@ public class CDVBugly extends CordovaPlugin {
         try {
             UserStrategy strategy = new UserStrategy(this.cordova.getActivity().getApplicationContext());
             strategy.setAppChannel("APAD");
-            strategy.setAppVersion(Build.VERSION.RELEASE);
+            PackageManager pm = cordova.getActivity().getApplicationContext().getPackageManager();
+            if (pm != null){
+                strategy.setAppVersion(pm.getPackageInfo(this.cordova.getActivity().getApplicationContext().getPackageName(), 0).versionName);
+            }else {
+                strategy.setAppVersion("unknown");
+            }
             strategy.setAppPackageName(this.cordova.getActivity().getApplicationContext().getPackageName());
             strategy.setDeviceID(Device.uuid);
             strategy.setDeviceModel(Build.BRAND + " " + Build.MODEL);
@@ -74,6 +84,31 @@ public class CDVBugly extends CordovaPlugin {
         this.cordova.getActivity().runOnUiThread(CrashReport::testJavaCrash);
         callbackContext.success();
         return true;
+    }
+
+    private boolean postContent(CordovaArgs args, CallbackContext callbackContext) {
+        final JSONObject params;
+        try {
+            params = args.getJSONObject(0);
+            String title = "";
+            if (params.has("title")) {
+                title = params.getString("title");
+            }
+            String content = "";
+            if (params.has("content")) {
+                content = params.getString("content");
+            }
+            if(title.isEmpty() || content.isEmpty()){
+                callbackContext.success();
+                return true;
+            }
+            CrashReport.postException(8, "JS主动上报: " + title, content, "", new ArrayMap<>());
+            callbackContext.success();
+            return true;
+        } catch (JSONException e) {
+            callbackContext.error("JSON parse error: " + e.getMessage());
+            return false;
+        }
     }
 
 }

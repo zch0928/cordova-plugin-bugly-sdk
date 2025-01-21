@@ -11,3 +11,7 @@ exports.testJavaCrash = function() {
 exports.testSIGTRAP = function() {
     exec(null, null, "Bugly", "testSIGTRAP", []);
 };
+
+exports.testPostContent = function(success, error, arg0) {
+    exec(success, error, "Bugly", "postContent", [arg0]);
+};
