@@ -17,7 +17,7 @@
 
 
 ```shell
-cordova plugin add cordova-plugin-bugly-sdk  --variable ANDROID_APPID=your value
+cordova plugin add https://github.com/zch0928/cordova-plugin-bugly-sdk.git --variable ANDROID_APPID=value
 ```
 
 
