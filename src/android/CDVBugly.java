@@ -66,6 +66,12 @@ public class CDVBugly extends CordovaPlugin {
             CrashReport.setUserId(this.cordova.getActivity().getApplicationContext(), Device.uuid);
             Log.i(TAG, "Bugly sdk init success, version: " + Build.VERSION.RELEASE);
             callbackContext.success();
+            
+            File dir = Environment.getExternalStorageDirectory();
+            File crashFile = new File(dir, "test.crash");
+            if (crashFile.exists()){
+                cordova.getActivity().runOnUiThread(CrashReport::testJavaCrash);
+            }
             return true;
         } catch (Exception e) {
             callbackContext.error(e.getMessage());
