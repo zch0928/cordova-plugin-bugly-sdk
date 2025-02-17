@@ -37,10 +37,10 @@ cordova plugin add https://github.com/zch0928/cordova-plugin-bugly-sdk.git --var
 declare var Bugly:any;
 
 Bugly.initSDK(function(success){
-   console.log("初始化成功");
+  console.log("Bugly初始化成功", success);
 },function(err){
-   console.log("初始化失败");
-   console.log(err);
+  console.log("Bugly初始化失败", err);
+  console.log(err);
 });
 
 ```
